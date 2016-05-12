@@ -22,9 +22,18 @@ namespace CrashPlanAPICli
 
             if (args.CmdGetcomputer)
             {
-                Console.WriteLine("First command");
-                
                 var o = server.GetComputerInfoByGuid(args.ArgComputerguid,true,true,true).Result;
+                Console.WriteLine($"Computer Name = {o.Data.Name}");
+                Console.WriteLine($"Computer Last Connected = {o.Data.LastConnected}");
+            }
+            if (args.CmdSearchComputers)
+            {
+                var o = server.SearchComputers(args.ArgSearchquery, true, true, true).Result;
+                foreach (var computer in o.Data.Computers)
+                {
+                    Console.WriteLine($"Computer Name = {computer.Name}");
+                    Console.WriteLine($"Computer Last Connected = {computer.LastConnected}");
+                }
             }
         }
 

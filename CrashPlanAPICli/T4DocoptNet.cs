@@ -12,7 +12,7 @@ namespace CrashPlanAPICli
 
 Usage:
   CrashPlanAPICli GetComputer <ComputerGuid>  --user=<user> --pass=<pass> [ --baseUrl=<baseUrl> ]
- 
+  CrashPlanAPICli SearchComputers <SearchQuery>  --user=<user> --pass=<pass> [ --baseUrl=<baseUrl> ]
 
 Options:
  --user=<user>          Username
@@ -20,31 +20,7 @@ Options:
  --baseUrl=<baseUrl>    Base URL [default: https://www.crashplanpro.com/api/].
 
 Explanation:
- This is an example usage file that needs to be customized.
- Every time you change this file, run the Custom Tool command
- on T4DocoptNet.tt to re-generate the MainArgs class
- (defined in T4DocoptNet.cs).
- You can then use the MainArgs classed as follows:
-
-    class Program
-    {
-
-       static void DoStuff(string arg, bool flagO, string longValue)
-       {
-         // ...
-       }
-
-        static void Main(string[] argv)
-        {
-            // Automatically exit(1) if invalid arguments
-            var args = new MainArgs(argv, exit: true);
-            if (args.CmdCommand)
-            {
-                Console.WriteLine(""First command"");
-                DoStuff(args.ArgArg, args.OptO, args.OptLong);
-            }
-        }
-    }
+  
 
 ";
 	    private readonly IDictionary<string, ValueObject> _args;
@@ -64,7 +40,9 @@ Explanation:
 		public string OptUser { get { return _args["--user"].ToString(); } }
 		public string OptPass { get { return _args["--pass"].ToString(); } }
 		public string OptBaseurl { get { return _args["--baseUrl"].ToString(); } }
-	
+		public bool CmdSearchComputers { get { return _args["SearchComputers"].IsTrue; } }
+		public string ArgSearchquery  { get { return _args["<SearchQuery>"].ToString(); } }
+		 
 	}
 
 	

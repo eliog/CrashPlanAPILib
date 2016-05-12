@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using CrashPlanAPILib.Models;
+using Newtonsoft.Json.Linq;
 
 namespace CrashPlanAPILib
 {
@@ -42,6 +44,9 @@ namespace CrashPlanAPILib
             {
                 var response = await client.GetAsync(path);
                 response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(JObject.Parse(json).ToString());
+                
                 return await response.Content.ReadAsAsync<T>();
 
             }
@@ -79,6 +84,19 @@ namespace CrashPlanAPILib
         public async Task<GetComputerResponse> GetComputerInfoByGuid(string computerGuid,bool incBackupUsage = false, bool incActivity=false, bool incHistory = false)
         {
             return await GetObject<GetComputerResponse>($"Computer/{computerGuid}?idType=guid&incBackupUsage={incBackupUsage}&incActivity={incActivity}&incHistory={incHistory}");
+        }
+
+        /// <summary>
+        /// Get computers by their name or partial computer gid
+        /// </summary>
+        /// <param name="q">Query</param>
+        /// <param name="incBackupUsage">Include destinations and their backup stats</param>
+        /// <param name="incActivity">Include backup history data for each destination</param>
+        /// <param name="incHistory">Include live backup activity stats</param>
+        /// <returns></returns>
+        public async Task<GetComputersResponse> SearchComputers(string q, bool incBackupUsage = false, bool incActivity = false, bool incHistory = false)
+        {
+            return await GetObject<GetComputersResponse>($"Computer?q={q}&incBackupUsage={incBackupUsage}&incActivity={incActivity}&incHistory={incHistory}");
         }
     }
 }
