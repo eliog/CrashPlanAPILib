@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CrashPlanAPILib.Models
+namespace CrashPlanAPILib.Models.Info
 {
-    public class BackupHistory
+    public class BackupHistoryInfo
     {
         public DateTime? Date { get; set; }
         public long BillableBytes { get; set; }

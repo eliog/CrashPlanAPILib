@@ -11,7 +11,7 @@ Usage:
   CrashPlanAPICli GetComputer <ComputerGuid>  --user=<user> --pass=<pass> [ --baseUrl=<baseUrl> ]
   CrashPlanAPICli SearchComputers <SearchQuery>  --user=<user> --pass=<pass> [ --baseUrl=<baseUrl> ]
   CrashPlanAPICli GetSignedInUser  --user=<user> --pass=<pass> [ --baseUrl=<baseUrl> ]
-  CrashPlanAPICli WebRestore <ComputerGuid> --user=<user> --pass=<pass> [ --baseUrl=<baseUrl> ]
+  CrashPlanAPICli SearchBackupRegex <ComputerGuid> <regex> --user=<user> --pass=<pass> [ --baseUrl=<baseUrl> ]
 
 Options:
  --user=<user>          Username
@@ -34,8 +34,9 @@ Explanation:
         public bool CmdGetcomputer => _args["GetComputer"].IsTrue;
         public bool CmdSearchComputers => _args["SearchComputers"].IsTrue;
         public bool CmdGetSignedInUser => _args["GetSignedInUser"].IsTrue;
-        public bool CmdWebRestore => _args["WebRestore"].IsTrue;
+        public bool CmdSearchBackupRegex => _args["SearchBackupRegex"].IsTrue;
         public string ArgComputerguid => _args["<ComputerGuid>"].ToString();
+        public string ArgRegex => _args["<regex>"].ToString();
         public string OptUser => _args["--user"].ToString();
         public string OptPass => _args["--pass"].ToString();
         public string OptBaseurl => _args["--baseUrl"].ToString();

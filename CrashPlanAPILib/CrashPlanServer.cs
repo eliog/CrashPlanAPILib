@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using CrashPlanAPILib.Models;
-using Newtonsoft.Json.Linq;
+﻿using System.Threading.Tasks;
+using CrashPlanAPILib.Models.Info;
+using CrashPlanAPILib.Models.Requests;
+using CrashPlanAPILib.Models.Responses;
 
 namespace CrashPlanAPILib
 {
@@ -20,7 +16,7 @@ namespace CrashPlanAPILib
         /// </summary>
         public string BaseUrl { get; set; } = "https://www.crashplanpro.com/api/";
 
-        public CrashPlanServerInterface ServerInterface { get; set; } = new CrashPlanServerInterface();
+        public CrashPlanServerInterface ServerInterface { get; } = new CrashPlanServerInterface();
         
         /// <summary>
         /// Login to the server
@@ -42,9 +38,9 @@ namespace CrashPlanAPILib
         /// <param name="incActivity">Include backup history data for each destination</param>
         /// <param name="incHistory">Include live backup activity stats</param>
         /// <returns></returns>
-        public async Task<GetComputerResponse> GetComputerInfoByGuid(string computerGuid,bool incBackupUsage = false, bool incActivity=false, bool incHistory = false)
+        public async Task<CrashPlanDataResponse<ComputerInfo>> GetComputerInfoByGuid(string computerGuid,bool incBackupUsage = false, bool incActivity=false, bool incHistory = false)
         {
-            return await ServerInterface.GetObject<GetComputerResponse>($"Computer/{computerGuid}?idType=guid&incBackupUsage={incBackupUsage}&incActivity={incActivity}&incHistory={incHistory}");
+            return await ServerInterface.GetObject<CrashPlanDataResponse<ComputerInfo>>($"Computer/{computerGuid}?idType=guid&incBackupUsage={incBackupUsage}&incActivity={incActivity}&incHistory={incHistory}");
         }
 
         /// <summary>
@@ -55,22 +51,36 @@ namespace CrashPlanAPILib
         /// <param name="incActivity">Include backup history data for each destination</param>
         /// <param name="incHistory">Include live backup activity stats</param>
         /// <returns></returns>
-        public async Task<GetComputersResponse> SearchComputers(string q, bool incBackupUsage = false, bool incActivity = false, bool incHistory = false)
+        public async Task<CrashPlanDataResponse<GetComputersResponseData>> SearchComputers(string q, bool incBackupUsage = false, bool incActivity = false, bool incHistory = false)
         {
-            return await ServerInterface.GetObject<GetComputersResponse>($"Computer?q={q}&incBackupUsage={incBackupUsage}&incActivity={incActivity}&incHistory={incHistory}");
+            return await ServerInterface.GetObject<CrashPlanDataResponse<GetComputersResponseData>>($"Computer?q={q}&incBackupUsage={incBackupUsage}&incActivity={incActivity}&incHistory={incHistory}");
         }
 
+        /// <summary>
+        /// Returns the currently signed in user
+        /// </summary>
+        /// <returns></returns>
         public async Task<GetUserResponse> GetSignedInUser()
         {
             return await ServerInterface.GetObject<GetUserResponse>("User/my");
         }
-
-        public async Task<GetDataKeyTokenResponse> GetDataKeyTokenForComputerByGuid(string computerGuid)
+        /// <summary>
+        /// Get the datakeytoken for a computer
+        /// </summary>
+        /// <param name="computerGuid"></param>
+        /// <returns></returns>
+        public async Task<CrashPlanDataResponse<DataKeyTokenInfo>> GetDataKeyTokenForComputerByGuid(string computerGuid)
         {
-            return await ServerInterface.PostObject<GetDataKeyTokenResponse,DataKeyTokenRequest>("DataKeyToken", new DataKeyTokenRequest() {  ComputerGuid = computerGuid});
+            return await ServerInterface.PostObject<CrashPlanDataResponse<DataKeyTokenInfo>, DataKeyTokenRequest>("DataKeyToken", new DataKeyTokenRequest() {  ComputerGuid = computerGuid});
         }
-
-        public async Task<GetLoginTokenResponse> GetLoginToken(int userId, string sourceGuid, string destinationGuid)
+        /// <summary>
+        /// Get a login token for a backup server
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <param name="sourceGuid">Source Computer Guid</param>
+        /// <param name="destinationGuid">Backup Destination Guid</param>
+        /// <returns></returns>
+        public async Task<CrashPlanDataResponse<LoginTokenInfo>> GetLoginToken(int userId, string sourceGuid, string destinationGuid)
         {
             var req = new LoginTokenRequest()
             {
@@ -78,14 +88,19 @@ namespace CrashPlanAPILib
                 SourceGuid = sourceGuid,
                 DestinationGuid = destinationGuid
             };
-            return await ServerInterface.PostObject<GetLoginTokenResponse, LoginTokenRequest>("LoginToken", req);
+            return await ServerInterface.PostObject<CrashPlanDataResponse<LoginTokenInfo>, LoginTokenRequest>("LoginToken", req);
 
         }
-        public async Task<object> BeginWebRestoreSessionForComputerByGuid(string computerGuid)
+        /// <summary>
+        /// Begins a web restore session for a computer.  uses the 1st destination
+        /// </summary>
+        /// <param name="computerGuid">Computer Guid</param>
+        /// <returns></returns>
+        public async Task<CrashPlanWebRestoreSession> BeginWebRestoreSessionForComputerByGuid(string computerGuid)
         {
             // get signed in user so we can get the user's id, we also need the computers backup target guid so we get that as well.
             var userTask  = GetSignedInUser();
-            var computerTask = GetComputerInfoByGuid(computerGuid, true, false, false);
+            var computerTask = GetComputerInfoByGuid(computerGuid, true);
 
             // We'll also need the datakeytoken later
             var dataKeyTokenTask = GetDataKeyTokenForComputerByGuid(computerGuid);

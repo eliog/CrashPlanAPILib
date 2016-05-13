@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CrashPlanAPILib.Models
+namespace CrashPlanAPILib.Models.Info
 {
-    public class BackupUsage
+    public class BackupUsageInfo
     {
         public string TargetComputerId { get; set; }
         public string TargetComputerParentId { get; set; }
@@ -39,6 +39,6 @@ namespace CrashPlanAPILib.Models
         public bool IsProvider { get; set; }
         public string ArchiveGuid { get; set; }
         public string ArchiveFormat { get; set; }
-        public BackupHistory[] History { get; set; }
+        public BackupHistoryInfo[] History { get; set; }
     }
 }

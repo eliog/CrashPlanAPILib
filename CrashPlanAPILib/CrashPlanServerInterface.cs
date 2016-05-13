@@ -21,7 +21,7 @@ namespace CrashPlanAPILib
             }
         }
 
-        private AuthToken _authToken;
+        private AuthTokenResponse _authToken;
         private string _serverUrl = "https://www.crashplanpro.com/api/";
 
         private HttpClient HttpClient
@@ -81,7 +81,7 @@ namespace CrashPlanAPILib
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
                 var response = await client.PostAsync("authToken", null);
                 response.EnsureSuccessStatusCode();
-                _authToken = await response.Content.ReadAsAsync<AuthToken>();
+                _authToken = await response.Content.ReadAsAsync<AuthTokenResponse>();
             }
         }
 
@@ -95,7 +95,7 @@ namespace CrashPlanAPILib
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("login_token", loginToken);
                 var response = await client.PostAsync("authToken", null);
                 response.EnsureSuccessStatusCode();
-                _authToken = await response.Content.ReadAsAsync<AuthToken>();
+                _authToken = await response.Content.ReadAsAsync<AuthTokenResponse>();
             }
         }
     }

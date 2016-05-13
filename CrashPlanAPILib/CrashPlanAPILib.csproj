@@ -52,14 +52,19 @@
     <Compile Include="CrashPlanServerInterface.cs" />
     <Compile Include="CrashPlanWebRestoreSession.cs" />
     <Compile Include="Models\AuthToken.cs" />
-    <Compile Include="Models\BackupHistory.cs" />
-    <Compile Include="Models\BackupUsage.cs" />
-    <Compile Include="Models\ComputerInfo.cs" />
-    <Compile Include="Models\DataKeyTokenRequest.cs" />
-    <Compile Include="Models\GetComputerResponse.cs" />
-    <Compile Include="Models\LoginTokenRequest.cs" />
-    <Compile Include="Models\UserInfo.cs" />
-    <Compile Include="Models\WebRestoreSessionRequest.cs" />
+    <Compile Include="Models\Info\DataKeyTokenInfo.cs" />
+    <Compile Include="Models\Info\BackupHistoryInfo.cs" />
+    <Compile Include="Models\Info\BackupUsageInfo.cs" />
+    <Compile Include="Models\Info\ComputerInfo.cs" />
+    <Compile Include="Models\Info\WebRestoreSessionInfo.cs" />
+    <Compile Include="Models\Responses\CrashPlanDataResponse.cs" />
+    <Compile Include="Models\Requests\DataKeyTokenRequest.cs" />
+    <Compile Include="Models\Info\FileSearchResultInfo.cs" />
+    <Compile Include="Models\Responses\GetComputerResponse.cs" />
+    <Compile Include="Models\Info\LoginTokenInfo.cs" />
+    <Compile Include="Models\Requests\LoginTokenRequest.cs" />
+    <Compile Include="Models\Info\UserInfo.cs" />
+    <Compile Include="Models\Requests\WebRestoreSessionRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

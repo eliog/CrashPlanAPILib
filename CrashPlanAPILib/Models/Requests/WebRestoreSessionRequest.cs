@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace CrashPlanAPILib.Models
+namespace CrashPlanAPILib.Models.Requests
 {
     public class WebRestoreSessionRequest
     {
@@ -14,4 +9,6 @@ namespace CrashPlanAPILib.Models
         [JsonProperty("dataKeyToken")]
         public string DataKeyToken { get; set; }
     }
+
+    
 }

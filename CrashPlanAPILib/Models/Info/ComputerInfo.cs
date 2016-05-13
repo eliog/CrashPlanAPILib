@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CrashPlanAPILib.Models
+namespace CrashPlanAPILib.Models.Info
 {
     public class ComputerInfo
     {
@@ -39,7 +39,7 @@ namespace CrashPlanAPILib.Models
         public DateTime? ModificationDate { get; set; }
         public DateTime? LoginDate { get; set; }
 
-        public BackupUsage[] BackupUsage { get; set; }
+        public BackupUsageInfo[] BackupUsage { get; set; }
 
     }
 }

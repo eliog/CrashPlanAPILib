@@ -1,15 +1,10 @@
 ﻿using System;
+using CrashPlanAPILib.Models.Requests;
+using CrashPlanAPILib.Models.Responses;
 
 namespace CrashPlanAPILib.Models
 {
-    public class AuthTokenMetadata
-    {
-        //public object[] Params { get; set; }
-        public DateTime? TimeStamp { get; set; }
-    }
-    public class AuthToken
-    {
-        public string[] Data { get; set; }
-        public AuthTokenMetadata Metadata { get; set; }
-    }
+    
+    public class AuthTokenResponse : CrashPlanDataResponse<string[]> { }
+    
 }

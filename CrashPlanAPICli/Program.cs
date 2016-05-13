@@ -32,13 +32,17 @@ namespace CrashPlanAPICli
                     Console.WriteLine($"Computer Last Connected = {computer.LastConnected}");
                 }
             }
-            if (args.CmdGetSignedInUser)
-            {
-                var o = server.GetSignedInUser().Result;
-            }
-            if (args.CmdWebRestore)
+             
+            if (args.CmdSearchBackupRegex)
             {
                 var o = server.BeginWebRestoreSessionForComputerByGuid(args.ArgComputerguid).Result;
+                var r = o.SearchForFilesWithRegex(args.ArgRegex).Result;
+                //@"(charm{0}\d*.bak|FUL-charm-\d*.bak)").Result;
+                Console.WriteLine("Found {0} File(s)",r.Data.Length);
+                foreach (var f in r.Data)
+                {
+                    Console.WriteLine($"  {f.Filename} - {f.Path}");
+                }
             }
 
 

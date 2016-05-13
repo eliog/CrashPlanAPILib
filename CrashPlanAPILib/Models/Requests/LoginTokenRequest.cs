@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CrashPlanAPILib.Models
+namespace CrashPlanAPILib.Models.Requests
 {
     public class LoginTokenRequest
     {
@@ -12,16 +12,5 @@ namespace CrashPlanAPILib.Models
 
         [JsonProperty("destinationGuid")]
         public string DestinationGuid { get; set; }
-    }
-
-    public class LoginTokenInfo
-    {
-        public string LoginToken { get; set; }
-        public string ServerUrl { get; set; }
-    }
-
-    public class GetLoginTokenResponse
-    {
-        public LoginTokenInfo Data { get; set; }
     }
 }
