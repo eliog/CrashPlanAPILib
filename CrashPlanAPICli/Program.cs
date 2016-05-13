@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+ 
 
 namespace CrashPlanAPICli
 {
@@ -35,6 +32,16 @@ namespace CrashPlanAPICli
                     Console.WriteLine($"Computer Last Connected = {computer.LastConnected}");
                 }
             }
+            if (args.CmdGetSignedInUser)
+            {
+                var o = server.GetSignedInUser().Result;
+            }
+            if (args.CmdWebRestore)
+            {
+                var o = server.BeginWebRestoreSessionForComputerByGuid(args.ArgComputerguid).Result;
+            }
+
+
         }
 
     }

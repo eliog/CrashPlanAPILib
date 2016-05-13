@@ -49,11 +49,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrashPlanServer.cs" />
+    <Compile Include="CrashPlanServerInterface.cs" />
+    <Compile Include="CrashPlanWebRestoreSession.cs" />
     <Compile Include="Models\AuthToken.cs" />
     <Compile Include="Models\BackupHistory.cs" />
     <Compile Include="Models\BackupUsage.cs" />
     <Compile Include="Models\ComputerInfo.cs" />
+    <Compile Include="Models\DataKeyTokenRequest.cs" />
     <Compile Include="Models\GetComputerResponse.cs" />
+    <Compile Include="Models\LoginTokenRequest.cs" />
+    <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Models\WebRestoreSessionRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

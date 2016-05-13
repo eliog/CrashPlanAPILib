@@ -13,4 +13,9 @@
     {
         public GetComputersResponseData Data { get; set; }
     }
+
+    public class GetUserResponse
+    {
+        public UserInfo Data { get; set; }
+    }
 }
