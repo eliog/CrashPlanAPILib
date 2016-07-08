@@ -41,7 +41,7 @@ namespace CrashPlanAPICli
                 Console.WriteLine("Found {0} File(s)",r.Data.Length);
                 foreach (var f in r.Data)
                 {
-                    Console.WriteLine($"  {f.Filename} - {f.Path}");
+                    Console.WriteLine($"  {f.Filename} - {f.Path} - {f.Date} - {f.LastModifedAsDateTime()}");
                 }
             }
 
