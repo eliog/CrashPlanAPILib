@@ -1,6 +1,9 @@
 # CrashPlanAPILib
 Small library for accessing CrashPlan API with C#
 
+[![eliog-github MyGet Build Status](https://www.myget.org/BuildSource/Badge/eliog-github?identifier=e775bd65-7d4c-4634-aec7-9a076d955770)](https://www.myget.org/)
+[![NuGet](https://img.shields.io/nuget/v/CrashPlanAPILib.svg?maxAge=2592000?style=flat-square)]()
+
 Currently you can pull information about a computer (by guid):
 
 ``` c#
