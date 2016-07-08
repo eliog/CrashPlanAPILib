@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -11,6 +12,7 @@ namespace CrashPlanAPILib
 {
     public class CrashPlanServerInterface
     {
+        
         public string ServerUrl
         {
             get { return _serverUrl; }
@@ -24,6 +26,8 @@ namespace CrashPlanAPILib
         private AuthTokenResponse _authToken;
         private string _serverUrl = "https://www.crashplanpro.com/api/";
 
+        
+
         private HttpClient HttpClient
         {
             get
@@ -32,7 +36,7 @@ namespace CrashPlanAPILib
                 {
                     throw new InvalidOperationException("Auth Token Not Set (not logged in?)");
                 }
-                var client = new HttpClient { BaseAddress = new Uri(ServerUrl) };
+                var client = new HttpClient() { BaseAddress = new Uri(ServerUrl) };
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", $"{_authToken.Data[0]}-{_authToken.Data[1]}");
@@ -72,6 +76,10 @@ namespace CrashPlanAPILib
         /// <returns></returns>
         public async Task Login(string username, string password)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 |
+                                                              SecurityProtocolType.Tls;
+
+          
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServerUrl);
@@ -87,13 +95,17 @@ namespace CrashPlanAPILib
 
         public async Task LoginWithToken(string loginToken)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 |
+                                                              SecurityProtocolType.Tls;
+   
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(ServerUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("login_token", loginToken);
-                var response = await client.PostAsync("authToken", null);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("LOGIN_TOKEN", loginToken);
+                var response = await client.PostAsync($"authToken?_={DateTime.UtcNow.Ticks}", null);
                 response.EnsureSuccessStatusCode();
                 _authToken = await response.Content.ReadAsAsync<AuthTokenResponse>();
             }
